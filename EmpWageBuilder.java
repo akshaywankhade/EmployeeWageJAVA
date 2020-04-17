@@ -1,11 +1,16 @@
 public class EmpWageBuilder{
 	//CONSTANTS 
-	public static final int EMPLOYEE_WAGE_PER_HOUR=20;
-	public static final int IS_PART_TIME=1;
-	public static final int IS_FULL_TIME=2;
-	public static final int NUMBER_OF_WORKING_DAYS=20;
-	public static final int MAX_HRS_IN_MONTH=100;
+	public static final int IS_PART_TIME=0;
+	public static final int IS_FULL_TIME=1;
+	public int EMPLOYEE_WAGE_PER_HOUR;
+	public int NUMBER_OF_WORKING_DAYS;
+	public int MAX_HRS_IN_MONTH;
 	
+	public EmpWageBuilder(int EMPLOYEE_WAGE_PER_HOUR,int NUMBER_OF_WORKING_DAYS,int MAX_HRS_IN_MONTH){
+		this.EMPLOYEE_WAGE_PER_HOUR=EMPLOYEE_WAGE_PER_HOUR;
+		this.NUMBER_OF_WORKING_DAYS=NUMBER_OF_WORKING_DAYS;
+		this.MAX_HRS_IN_MONTH=MAX_HRS_IN_MONTH;
+	}
 
 	public void EmpWage(){
 		//VARIABLES
@@ -37,7 +42,11 @@ public class EmpWageBuilder{
 		System.out.println("Employee Wage Month: "+totalEmpWage);
 	}
 	public static void main(String args[]){
-		EmpWageBuilder Emp=new EmpWageBuilder();
-		Emp.EmpWage();
+		EmpWageBuilder WIPRO=new EmpWageBuilder(20,20,100);
+		EmpWageBuilder SBI=new EmpWageBuilder(20,20,100);
+		EmpWageBuilder RBI=new EmpWageBuilder(20,20,100);
+		WIPRO.EmpWage();
+		SBI.EmpWage();
+		RBI.EmpWage();
 	}
 }
