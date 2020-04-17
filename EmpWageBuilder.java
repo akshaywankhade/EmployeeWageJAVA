@@ -4,10 +4,10 @@ public class EmpWageBuilder{
 	public static final int IS_PART_TIME=1;
 	public static final int IS_FULL_TIME=2;
 	public static final int NUMBER_OF_WORKING_DAYS=20;
-	public static final int MAX_WORKING_HOUR=100;
-	public static final int MAX_WORKING_DAYS=20;
+	public static final int MAX_HRS_IN_MONTH=100;
+	
 
-	public static void main (String[] args){
+	public void EmpWage(){
 		//VARIABLES
 		int empHrs=0;
 		int empWage=0;
@@ -16,7 +16,7 @@ public class EmpWageBuilder{
 		int totalEmpHrs=0;
 
 		//COMPUTATION
-		while(totalEmpHrs<MAX_WORKING_HOUR && totalWorkingDays<MAX_WORKING_DAYS){
+		while(totalEmpHrs<=MAX_HRS_IN_MONTH && totalWorkingDays<NUMBER_OF_WORKING_DAYS){
 			totalWorkingDays++;	
 			int empCheck=((int)Math.floor(Math.random() *10))% 3;
 		
@@ -35,5 +35,9 @@ public class EmpWageBuilder{
 				totalEmpWage += empWage;
 		}
 		System.out.println("Employee Wage Month: "+totalEmpWage);
-		}
+	}
+	public static void main(String args[]){
+		EmpWageBuilder Emp=new EmpWageBuilder();
+		Emp.EmpWage();
+	}
 }
