@@ -1,60 +1,91 @@
 public class EmpWageBuilder{
-	//CONSTANTS 
-	public static final int IS_PART_TIME=0;
-	public static final int IS_FULL_TIME=1;
-	private final String company;
-	private final int EMPLOYEE_WAGE_PER_HOUR;
-	private final int NUM_OF_WORKING_DAYS;
-	private final int MAX_HOURS_PER_MONTH;
-	private int TOTAL_EMP_WAGE;
+	//CONSTANTS
+	public final int IS_PART_TIME = 0;
+	public final int IS_FULL_TIME = 1;
 	
-	public EmpWageBuilder(String company, int EMPLOYEE_WAGE_PER_HOUR, int NUM_OF_WORKING_DAYS, int MAX_HOURS_PER_MONTH){
-		this.company=company;
-		this.EMPLOYEE_WAGE_PER_HOUR=EMPLOYEE_WAGE_PER_HOUR;
-		this.NUM_OF_WORKING_DAYS=NUM_OF_WORKING_DAYS;
-		this.MAX_HOURS_PER_MONTH=MAX_HOURS_PER_MONTH;
-	}
+	public void calEmpWages(CompanyEmpWage company)
+	{
+		//VARIABLE
+		int empHrs = 0, totalEmpHrs = 0, totalWorkingDays = 0;
 
-	public void EmpWage(){
-		//VARIABLES
-		int empHrs=0;
-		int empWage=0;
-		int totalEmpWage=0;
-		int totalWorkingDays=0;
-		int totalEmpHrs=0;
-
-		//COMPUTATION
-		while(totalEmpHrs <= MAX_HOURS_PER_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS){
-			totalWorkingDays++;	
-			int empCheck=((int) Math.floor(Math.random() *10))% 3;
-		
-			switch(empCheck){
-				case IS_FULL_TIME:
-					empHrs=8;
-					break;
+		while( totalEmpHrs <= company.getMaxHrsInMonth() && totalWorkingDays < company.getMaxWorkingDays() )
+		 {
+			totalWorkingDays++;
+			int empCheck = (int) ( Math.random() * 10 ) % 3;
+			switch (empCheck)
+			{
 				case IS_PART_TIME:
-					empHrs=4;
+					empHrs = 4;
+					break;
+				case IS_FULL_TIME:
+					empHrs = 8;
 					break;
 				default:
-					empHrs=0;
+					empHrs = 0;
 			}
+			//CALCULATE TOTAL EMP HRS
 			totalEmpHrs += empHrs;
-			System.out.println("Day : " + totalWorkingDays + "Employee hours : " + empHrs);
+			//PRINT DAILY MANY WORK HOURS 
+			System.out.println("Day: " + totalWorkingDays + " Emp Hr: " +  empHrs);
 		}
-		TOTAL_EMP_WAGE=totalEmpHrs * EMPLOYEE_WAGE_PER_HOUR;
-	}
-	public String toString(){
-		return "Total EmpWage for Company: " +company+ " is: " + TOTAL_EMP_WAGE;
+		// CALCULATE TOTAL WAGE
+		company.setTotalEmpWage(totalEmpHrs * company.getEmpRatePerHrs());
+		System.out.println("Total Wage of " + company.getCompanyName() + " Employee is " + company.getTotalEmpWage());	
 	}
 
-	public static void main(String args[]){
-		System.out.println("Employee Wage Computation");
-		EmpWageBuilder WIPRO=new EmpWageBuilder("WIPRO",20,10,100);
-		WIPRO.EmpWage();
-		System.out.println("Total Employee Wage WIPRO : "+WIPRO);
-		EmpWageBuilder SBI=new EmpWageBuilder("SBI",20,10,100);
-		SBI.EmpWage();
-		System.out.println("Total Employee Wage SBI : "+SBI);
+	public static void main(String args[])
+	{
+		EmpWageBuilder empwagecomputation = new EmpWageBuilder();
+		CompanyEmpWage[] companys=new CompanyEmpWage[2];
 
+		companys[0] = new CompanyEmpWage("BRIDGELABZ",20,20,100);
+		empwagecomputation.calEmpWages(companys[0]);
+		
+		companys[1]= new CompanyEmpWage("CAPGMINI",50, 15, 100 );
+		empwagecomputation.calEmpWages(companys[1]);	
+	}
+}
+
+class CompanyEmpWage
+{
+	public int EMP_RATE_PER_HRS;
+	public int MAX_WORKING_DAYS;
+	public int MAX_HRS_IN_MONTH;
+	public String COMPANY_NAME;
+	
+	public int totalEmpWage=0;
+	
+	public CompanyEmpWage(String COMPANY_NAME,int EMP_RATE_PER_HRS, int MAX_WORKING_DAYS, int MAX_HRS_IN_MONTH)
+	{
+		this.EMP_RATE_PER_HRS = EMP_RATE_PER_HRS;
+		this.MAX_WORKING_DAYS = MAX_WORKING_DAYS;
+		this.MAX_HRS_IN_MONTH = MAX_HRS_IN_MONTH;
+		this.COMPANY_NAME=COMPANY_NAME;
+	}
+	//GETTER METHODS
+	public int getEmpRatePerHrs()
+	{
+		return EMP_RATE_PER_HRS;
+	}
+
+	public int getMaxWorkingDays()
+	{
+		return MAX_WORKING_DAYS;
+	}
+
+	public int getMaxHrsInMonth()
+	{
+		return MAX_HRS_IN_MONTH;
+	}
+	public String getCompanyName()	{
+		return COMPANY_NAME;
+	}
+	public void setTotalEmpWage(int totalEmpWage)
+	{
+		this.totalEmpWage=totalEmpWage;
+	}
+	public int getTotalEmpWage()
+	{
+		return totalEmpWage;
 	}
 }
