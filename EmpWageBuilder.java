@@ -2,14 +2,17 @@ public class EmpWageBuilder{
 	//CONSTANTS 
 	public static final int IS_PART_TIME=0;
 	public static final int IS_FULL_TIME=1;
-	public int EMPLOYEE_WAGE_PER_HOUR;
-	public int NUMBER_OF_WORKING_DAYS;
-	public int MAX_HRS_IN_MONTH;
+	private final String company;
+	private final int EMPLOYEE_WAGE_PER_HOUR;
+	private final int NUM_OF_WORKING_DAYS;
+	private final int MAX_HOURS_PER_MONTH;
+	private int TOTAL_EMP_WAGE;
 	
-	public EmpWageBuilder(int EMPLOYEE_WAGE_PER_HOUR,int NUMBER_OF_WORKING_DAYS,int MAX_HRS_IN_MONTH){
+	public EmpWageBuilder(String company, int EMPLOYEE_WAGE_PER_HOUR, int NUM_OF_WORKING_DAYS, int MAX_HOURS_PER_MONTH){
+		this.company=company;
 		this.EMPLOYEE_WAGE_PER_HOUR=EMPLOYEE_WAGE_PER_HOUR;
-		this.NUMBER_OF_WORKING_DAYS=NUMBER_OF_WORKING_DAYS;
-		this.MAX_HRS_IN_MONTH=MAX_HRS_IN_MONTH;
+		this.NUM_OF_WORKING_DAYS=NUM_OF_WORKING_DAYS;
+		this.MAX_HOURS_PER_MONTH=MAX_HOURS_PER_MONTH;
 	}
 
 	public void EmpWage(){
@@ -21,9 +24,9 @@ public class EmpWageBuilder{
 		int totalEmpHrs=0;
 
 		//COMPUTATION
-		while(totalEmpHrs<=MAX_HRS_IN_MONTH && totalWorkingDays<NUMBER_OF_WORKING_DAYS){
+		while(totalEmpHrs <= MAX_HOURS_PER_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS){
 			totalWorkingDays++;	
-			int empCheck=((int)Math.floor(Math.random() *10))% 3;
+			int empCheck=((int) Math.floor(Math.random() *10))% 3;
 		
 			switch(empCheck){
 				case IS_FULL_TIME:
@@ -35,18 +38,23 @@ public class EmpWageBuilder{
 				default:
 					empHrs=0;
 			}
-				totalEmpHrs += empHrs;
-				empWage=empHrs * EMPLOYEE_WAGE_PER_HOUR;
-				totalEmpWage += empWage;
+			totalEmpHrs += empHrs;
+			System.out.println("Day : " + totalWorkingDays + "Employee hours : " + empHrs);
 		}
-		System.out.println("Employee Wage Month: "+totalEmpWage);
+		TOTAL_EMP_WAGE=totalEmpHrs * EMPLOYEE_WAGE_PER_HOUR;
 	}
+	public String toString(){
+		return "Total EmpWage for Company: " +company+ " is: " + TOTAL_EMP_WAGE;
+	}
+
 	public static void main(String args[]){
-		EmpWageBuilder WIPRO=new EmpWageBuilder(20,20,100);
-		EmpWageBuilder SBI=new EmpWageBuilder(20,20,100);
-		EmpWageBuilder RBI=new EmpWageBuilder(20,20,100);
+		System.out.println("Employee Wage Computation");
+		EmpWageBuilder WIPRO=new EmpWageBuilder("WIPRO",20,10,100);
 		WIPRO.EmpWage();
+		System.out.println("Total Employee Wage WIPRO : "+WIPRO);
+		EmpWageBuilder SBI=new EmpWageBuilder("SBI",20,10,100);
 		SBI.EmpWage();
-		RBI.EmpWage();
+		System.out.println("Total Employee Wage SBI : "+SBI);
+
 	}
 }
